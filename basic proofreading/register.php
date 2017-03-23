@@ -105,9 +105,32 @@ if (isset($_POST) && count ($_POST) > 0) {
 if (!isset($_POST) || count($_POST) == 0) { ?>
 											<form method="post">
 												<label> First name*:</label>
-												<input type="text" name="first_name" placeholder="first name" required="required" maxlength="60"/>
+												<input type="text" name="first_name" placeholder="first name" required="required" maxlength="30"/>
 												<label> Last name:</label>
-												<input type="text" name="last_name" placeholder="last name" maxlength="60"/>
+												<input type="text" name="last_name" placeholder="last name" maxlength="25"/>
+												<label> Discipline:</label>
+												<select name = "discipline">
+												<option value = '-Pick From List-'>-Pick From List-</option>
+												<option value = 'Law and Accounting'>Law and Accounting</option>
+												<option value = 'Midwifery'>Midwifery</option>
+												<option value = 'Product Design and Technology'>Product Des)ign and Technology</option>
+												<option value = 'Computing Technologies'>Computing Technologies</option>
+												<option value = 'Nursing (Mental Health)'>Nursing (Mental Health)</option>
+												<option value = 'Nursing (Intellectual Disability)'>Nursing (Intellectual Disability)</option>
+												<option value = 'Sport and Exercise Sciences'>Sport and Exercise Sciences</option>
+												<option value = 'Software Engineering'>Software Engineering</option>
+												</select>
+												<br>
+												<label> Level:</label>
+												<select name = "level">
+												<option value = '-Pick From List-'>-Pick From List-</option>
+												<option value = 'BA'>BA</option>
+												<option value = 'BSc'>BSc</option>
+												<option value = 'MA'>MA</option>
+												<option value = 'MSc'>MSc</option>
+												<option value = 'PhD'>PhD</option>
+												</select>
+												<br>
 												<label> Email*:</label>
 												<input type="text" name="email" placeholder="email" required="required" maxlength="60"/>
 												<br>

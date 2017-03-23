@@ -75,12 +75,27 @@
 
 if (!isset($_POST) || count($_POST) == 0) { ?>
 											<form method="post">
-												<label> Title*:</label>
-												<input type="text" name="first_name" placeholder="title" required="required" maxlength="60"/>
+												<label> Task Type:</label>
+												<select name = "task_type">
+												<option value = '-Pick From List-'>-Pick From List-</option>
+												<option value = 'Assignment'>Assignment</option>
+												<option value = 'Dissertation'>Dissertation</option>
+												<option value = 'Research_Paper'>Research_Paper</option>
+												<option value = 'Thesis'>Thesis</option>
+												</select>
+												<br>
+												<label> Title:</label>
+												<input type="text" name="title" placeholder="title" required="required" maxlength="255"/>
 												<label> Description:</label>
-												<input type="text" name="last_name" placeholder="description" maxlength="60"/>
-												<label> File Format*:</label>
-												<input type="text" name="email" placeholder="file format" required="required" maxlength="60"/>
+												<input type="text" name="description" placeholder="description" maxlength="60"/>
+												<label> File Format:</label>
+												<select name = "file_format">
+												<option value = '-Pick From List-'>-Pick From List-</option>
+												<option value = 'doc'>.doc</option>
+												<option value = 'docx'>.docx</option>
+												<option value = 'html'>.html</option>
+												<option value = 'pdf'>.pdf</option>
+												</select>
 												<br>
 												
 												
