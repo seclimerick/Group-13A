@@ -100,24 +100,32 @@ if (!isset($_POST) || count($_POST) == 0) { ?>
 												<ul>
 												<label> Tags:</label>
 												<form> <p>Pick 4 tags maximum </p> 
-												<script type="text/javascript"> 
+												<script type="text/javascript">
 												</script> 
 												</head> 
 												<body> 
 												<div id="ScrollCB" style="height:150;width:400px;overflow:auto"> 
-												<input type="checkbox" id="HTML" value="HTML"><label for="HTML"> HTML</label><br>
-												<input type="checkbox" id="HTML" value="HTML"><label for="HTML"> HTML</label><br>
-												<input type="checkbox" id="HTML" value="HTML"><label for="HTML"> HTML</label><br>
-												<input type="checkbox" id="HTML" value="HTML"><label for="HTML"> HTML</label><br>
-												<input type="checkbox" id="HTML" value="HTML"><label for="HTML"> HTML</label><br>
-												<input type="checkbox" id="HTML" value="HTML"><label for="HTML"> HTML</label><br>
-												<input type="checkbox" id="HTML" value="HTML"><label for="HTML"> HTML</label><br>
-												<input type="checkbox" id="HTML" value="HTML"><label for="HTML"> HTML</label><br>
-												<input type="checkbox" id="HTML" value="HTML"><label for="HTML"> HTML</label><br>
-												<input type="checkbox" id="HTML" value="HTML"><label for="HTML"> HTML</label><br>
-												<input type="checkbox" id="HTML" value="HTML"><label for="HTML"> HTML</label><br>
-												<input type="checkbox" id="HTML" value="HTML"><label for="HTML"> HTML</label><br>
-												</div> 
+												<input type="checkbox" id="Accounting" value="Accounting"><label for="Accounting"> Accounting</label><br>
+												<input type="checkbox" id="Database Design" value="Database Design"><label for="Database Design"> Database Design</label><br>
+												<input type="checkbox" id="Design" value="Design"><label for="Design"> Design</label><br>
+												<input type="checkbox" id="Disabilities" value="Disabilities"><label for="Disabilities"> Disabilities</label><br>
+												<input type="checkbox" id="Education" value="Education"><label for="Education"> Education</label><br>
+												<input type="checkbox" id="Engineering" value="Engineering"><label for="Engineering"> Engineering</label><br>
+												<input type="checkbox" id="Equine" value="Equine"><label for="Equine"> Equine</label><br>
+												<input type="checkbox" id="Food Sciences" value="Food Sciences"><label for="Food Sciences"> Food Sciences</label><br>
+												<input type="checkbox" id="Health Sciences" value="Health Sciences"><label for="Health Sciences"> Health Sciences</label><br>
+												<input type="checkbox" id="Law" value="Law"><label for="Law"> Law</label><br>
+												<input type="checkbox" id="Medical" value="Medical"><label for="Medical"> Medical</label><br>
+												<input type="checkbox" id="Mobile App Design" value="Mobile App Design"><label for="Mobile App Design"> Mobile App Design</label><br>
+												<input type="checkbox" id="Networking" value="Networking"><label for="Networking"> Networking</label><br>
+												<input type="checkbox" id="Nursing" value="Nursing"><label for="Nursing"> Nursing</label><br>
+												<input type="checkbox" id="Programming" value="Programming"><label for="Programming"> Programming</label><br>
+												<input type="checkbox" id="Psychology" value="Psychology"><label for="Psychology"> Psychology</label><br>
+												<input type="checkbox" id="Software" value="Software"><label for="Software"> Software</label><br>
+												<input type="checkbox" id="Sport" value="Sport"><label for="Sport"> Sport</label><br>
+												<input type="checkbox" id="Technology" value="Technology"><label for="Technology"> Technology</label><br>
+												<input type="checkbox" id="Web Design" value="Web Design"><label for="Web Design"> Web Design</label><br>
+												</div>
 											
 												
 												<button type="submit" class="button special small">Submit</button>

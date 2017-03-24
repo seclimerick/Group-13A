@@ -104,6 +104,15 @@ if (isset($_POST) && count ($_POST) > 0) {
 
 if (!isset($_POST) || count($_POST) == 0) { ?>
 											<form method="post">
+												<label> User_ID:</label>
+												<input type="text" User_ID="user_id" placeholder="user_id" required="required" maxlength="30"/>
+												<label> User_Type:</label>
+												<select name = "user_type">
+												<option value = '-Pick From List-'>-Pick From List-</option>
+												<option value = 'Student'>Student</option>
+												<option value = 'Moderator'>Moderator</option>
+												</select>
+												<br>
 												<label> First name*:</label>
 												<input type="text" name="first_name" placeholder="first name" required="required" maxlength="30"/>
 												<label> Last name:</label>
@@ -131,6 +140,8 @@ if (!isset($_POST) || count($_POST) == 0) { ?>
 												<option value = 'PhD'>PhD</option>
 												</select>
 												<br>
+												<label> Current:</label>
+												<input type="text" name="current" placeholder="current" required="required" maxlength="60"/>
 												<label> Email*:</label>
 												<input type="text" name="email" placeholder="email" required="required" maxlength="60"/>
 												<br>
@@ -149,9 +160,12 @@ if (!isset($_POST) || count($_POST) == 0) { ?>
 
 <?php
 if (isset($_POST) && count ($_POST) > 0) {
+$user_id = htmlspecialchars(ucfirst(trim($_POST["user_id"])));
+$user_type = htmlspecialchars(ucfirst(trim($_POST["user_type"])));
 $firstName = htmlspecialchars(ucfirst(trim($_POST["first_name"]))); $lastName = htmlspecialchars(ucfirst(trim($_POST["last_name"])));
 $discipline = htmlspecialchars(ucfirst(trim($_POST["discipline"])));
 $level = htmlspecialchars(ucfirst(trim($_POST["level"])));
+$current = htmlspecialchars(ucfirst(trim($_POST["current"])));
 $email = trim(strtolower($_POST["email"]));
 $passOne = $_POST["pass_one"]; $passTwo = $_POST["pass_two"];
 //check wheter user/email alerady exists
@@ -165,11 +179,11 @@ printf("<h2> Passwords do not match. </h2>");
 if ($rowCount > 0) {
 printf("<h2> An account already exists with the given email.</h2>");
 } else {
-$query = "INSERT INTO userinfo SET email = :email, forename = :first_name, surname = :last_name, password1 = :password, discipline = :discipline, level = :level";
+$query = "INSERT INTO userinfo SET user_id = :user_id, user_type = :user_type, email = :email, forename = :first_name, surname = :last_name, password1 = :password, discipline = :discipline, level = :level, current = :current";
 $stmt = $dbh->prepare($query);
 $siteSalt = "group13";
 $saltedHash = hash('sha256', $passOne.$siteSalt);
-$affectedRows = $stmt->execute(array(':email' => $email, ':first_name' => $firstName, ':last_name' => $lastName, ':password' => $saltedHash, ':level' => $level,':discipline' => $discipline));
+$affectedRows = $stmt->execute(array('user_id' => $user_id, ':user_type' => $user_type, ':email' => $email, ':first_name' => $firstName, ':last_name' => $lastName, ':password' => $saltedHash, ':level' => $level, ':discipline' => $discipline, ':current' => $current));
 if ($affectedRows > 0) {
 $insertId = $dbh->lastInsertId();
 printf("<h2> Welcome %s! Please <a href=\"./login.php\"> login </a> to proceed. </h2>", $firstName);
