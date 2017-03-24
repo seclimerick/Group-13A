@@ -1,5 +1,5 @@
 <html><head>
-		<title>UL Buy n' Sell</title>
+		<title>UL Proofreading Service</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
@@ -41,7 +41,7 @@
 								<div class="spotlight">
 									<div class="content">
 										<header class="major">
-											<h2>UL Buy n' Sell</h2>
+											<h2>UL Proofreading Service</h2>
 										</header>
 <?php
   /*http://php.net/manual/en/function.session-unset.php*/

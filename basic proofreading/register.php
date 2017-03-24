@@ -145,7 +145,41 @@ if (!isset($_POST) || count($_POST) == 0) { ?>
 												<button type="reset" class="button small">Reset</button>
 												
 										</form>
-<?php } ?>									
+<?php } ?>	
+
+<?php
+if (isset($_POST) && count ($_POST) > 0) {
+$firstName = htmlspecialchars(ucfirst(trim($_POST["first_name"]))); $lastName = htmlspecialchars(ucfirst(trim($_POST["last_name"])));
+$discipline = htmlspecialchars(ucfirst(trim($_POST["discipline"])));
+$level = htmlspecialchars(ucfirst(trim($_POST["level"])));
+$email = trim(strtolower($_POST["email"]));
+$passOne = $_POST["pass_one"]; $passTwo = $_POST["pass_two"];
+//check wheter user/email alerady exists
+$dbh = new PDO("mysql:host=localhost;dbname=group13", "root");
+$stmt = $dbh->prepare("SELECT user_id, email, password1 FROM userinfo WHERE email = ?" );
+$stmt->execute(array($email));
+$rowCount = $stmt->rowCount();
+if ($passOne != $passTwo) { //in case Javascript is disabled.
+printf("<h2> Passwords do not match. </h2>");
+} else {
+if ($rowCount > 0) {
+printf("<h2> An account already exists with the given email.</h2>");
+} else {
+$query = "INSERT INTO userinfo SET email = :email, forename = :first_name, surname = :last_name, password1 = :password, discipline = :discipline, level = :level";
+$stmt = $dbh->prepare($query);
+$siteSalt = "group13";
+$saltedHash = hash('sha256', $passOne.$siteSalt);
+$affectedRows = $stmt->execute(array(':email' => $email, ':first_name' => $firstName, ':last_name' => $lastName, ':password' => $saltedHash, ':level' => $level,':discipline' => $discipline));
+if ($affectedRows > 0) {
+$insertId = $dbh->lastInsertId();
+printf("<h2> Welcome %s! Please <a href=\"./login.php\"> login </a> to proceed. </h2>", $firstName);
+//logout first
+/*http://php.net/manual/en/function.session-unset.php*/
+session_unset(); session_destroy(); session_write_close(); setcookie(session_name(),'',0,'/');
+session_regenerate_id(true);
+} } } }
+?>
+								
 										
 									</div>
 									
