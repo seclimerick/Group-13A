@@ -6,6 +6,33 @@
 		<link rel="stylesheet" href="assets/css/main.css">
 		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+		
+		<script type="text/javascript">
+
+		/***********************************************
+		* Limit number of checked checkboxes script- by JavaScript Kit (www.javascriptkit.com)
+		* This notice must stay intact for usage
+		* Visit JavaScript Kit at http://www.javascriptkit.com/ for this script and 100s more
+		***********************************************/
+
+		function checkboxlimit(checkgroup, limit){
+			var checkgroup=checkgroup
+			var limit=limit
+			for (var i=0; i<checkgroup.length; i++){
+				checkgroup[i].onclick=function(){
+				var checkedcount=0
+				for (var i=0; i<checkgroup.length; i++)
+					checkedcount+=(checkgroup[i].checked)? 1 : 0
+				if (checkedcount>limit){
+					alert("You can only select a maximum of "+limit+" checkboxes")
+					this.checked=false
+					}
+				}
+			}
+		}
+
+		</script>
+
 	</head>
 	<body class="">
 
@@ -88,6 +115,12 @@ if (!isset($_POST) || count($_POST) == 0) { ?>
 												<input type="text" name="title" placeholder="title" required="required" maxlength="255"/>
 												<label> Description:</label>
 												<input type="text" name="description" placeholder="description" maxlength="60"/>
+												<label> Required Words:</label>
+												<input type="number" name="required_words" placeholder="required_words" maxlength="60"/>
+												<label> Word Count:</label>
+												<input type="number" name="word_count" placeholder="word_count" maxlength="60"/>
+												<label> Total Pages:</label>
+												<input type="number" name="total_pages" placeholder="total_pages" maxlength="60"/>
 												<label> File Format:</label>
 												<select name = "file_format">
 												<option value = '-Pick From List-'>-Pick From List-</option>
@@ -98,6 +131,10 @@ if (!isset($_POST) || count($_POST) == 0) { ?>
 												</select>
 												<br>
 												<ul>
+												<label> Due Date:</label>
+												<input type="date" name="due_date" placeholder="due_date" required="required"/>
+												<label>Due Time:</label>
+												<input type="time" name="due_time" placeholder="due_time" required="required"/>
 												<label> Tags:</label>
 												<form> <p>Pick 4 tags maximum </p> 
 												<script type="text/javascript">
@@ -126,6 +163,12 @@ if (!isset($_POST) || count($_POST) == 0) { ?>
 												<input type="checkbox" id="Technology" value="Technology"><label for="Technology"> Technology</label><br>
 												<input type="checkbox" id="Web Design" value="Web Design"><label for="Web Design"> Web Design</label><br>
 												</div>
+												<script type="text/javascript">
+
+												//Syntax: checkboxlimit(checkbox_reference, limit)
+												checkboxlimit(create_task, 4)
+
+</script>
 											
 												
 												<button type="submit" class="button special small">Submit</button>

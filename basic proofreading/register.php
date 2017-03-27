@@ -105,7 +105,7 @@ if (isset($_POST) && count ($_POST) > 0) {
 if (!isset($_POST) || count($_POST) == 0) { ?>
 											<form method="post">
 												<label> User_ID:</label>
-												<input type="text" User_ID="user_id" placeholder="user_id" required="required" maxlength="30"/>
+												<input type="integer" User_ID="user_id" placeholder="user_id" required="required" maxlength="30"/>
 												<label> User_Type:</label>
 												<select name = "user_type">
 												<option value = '-Pick From List-'>-Pick From List-</option>
@@ -160,7 +160,7 @@ if (!isset($_POST) || count($_POST) == 0) { ?>
 
 <?php
 if (isset($_POST) && count ($_POST) > 0) {
-$user_id = htmlspecialchars(ucfirst(trim($_POST["user_id"])));
+$user_id = htmlspecialchars(trim($_POST["user_id"]));
 $user_type = htmlspecialchars(ucfirst(trim($_POST["user_type"])));
 $firstName = htmlspecialchars(ucfirst(trim($_POST["first_name"]))); $lastName = htmlspecialchars(ucfirst(trim($_POST["last_name"])));
 $discipline = htmlspecialchars(ucfirst(trim($_POST["discipline"])));
@@ -183,7 +183,7 @@ $query = "INSERT INTO userinfo SET user_id = :user_id, user_type = :user_type, e
 $stmt = $dbh->prepare($query);
 $siteSalt = "group13";
 $saltedHash = hash('sha256', $passOne.$siteSalt);
-$affectedRows = $stmt->execute(array('user_id' => $user_id, ':user_type' => $user_type, ':email' => $email, ':first_name' => $firstName, ':last_name' => $lastName, ':password' => $saltedHash, ':level' => $level, ':discipline' => $discipline, ':current' => $current));
+$affectedRows = $stmt->execute(array(':user_id' => $user_id, ':user_type' => $user_type, ':email' => $email, ':first_name' => $firstName, ':last_name' => $lastName, ':password' => $saltedHash, ':level' => $level, ':discipline' => $discipline, ':current' => $current));
 if ($affectedRows > 0) {
 $insertId = $dbh->lastInsertId();
 printf("<h2> Welcome %s! Please <a href=\"./login.php\"> login </a> to proceed. </h2>", $firstName);
