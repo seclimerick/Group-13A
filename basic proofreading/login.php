@@ -87,9 +87,9 @@
 
 										<h2>Login</h2>
 										<form method="post">
-												<input type="text" name="e" placeholder="email" required="required" maxlength="35"/>
+												<input type="text" name="email" placeholder="email" required="required" maxlength="35"/>
 												<br>
-												<input type="password" name="p" placeholder="Password" required="required" maxlength="50"/>
+												<input type="password" name="password1" placeholder="Password" required="required" maxlength="50"/>
 												<br>
 												<button type="submit" class="button special small">Login</button>
 												<label>Don't have account yet ! <a href="./register.php">Sign Up</a></label>

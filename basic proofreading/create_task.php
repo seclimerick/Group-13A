@@ -7,31 +7,7 @@
 		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 		
-		<script type="text/javascript">
-
-		/***********************************************
-		* Limit number of checked checkboxes script- by JavaScript Kit (www.javascriptkit.com)
-		* This notice must stay intact for usage
-		* Visit JavaScript Kit at http://www.javascriptkit.com/ for this script and 100s more
-		***********************************************/
-
-		function checkboxlimit(checkgroup, limit){
-			var checkgroup=checkgroup
-			var limit=limit
-			for (var i=0; i<checkgroup.length; i++){
-				checkgroup[i].onclick=function(){
-				var checkedcount=0
-				for (var i=0; i<checkgroup.length; i++)
-					checkedcount+=(checkgroup[i].checked)? 1 : 0
-				if (checkedcount>limit){
-					alert("You can only select a maximum of "+limit+" checkboxes")
-					this.checked=false
-					}
-				}
-			}
-		}
-
-		</script>
+		
 
 	</head>
 	<body class="">
@@ -75,27 +51,41 @@
 											<h2>UL Proofreading Service</h2>
 										</header>
 <?php
-    if (isset($_GET["id"])) {
-        $id = $_GET["id"];
-	    try {
-            $dbh = new PDO("mysql:host=localhost;dbname=buynsell", "root", "");
-            $stmt = $dbh->prepare("SELECT title, description FROM `items` WHERE id=:id" );
-            $stmt->bindValue(':id', $id);
-            $stmt->execute();
-            $row = $stmt->fetch(PDO::FETCH_ASSOC);
-            if ($row) {
-                printf("<h2> %s </h2> <p> %s </p>\n", $row["title"], $row["description"]);
-            } else {
-                printf("Item not found.");
-            }
-        
-		
-
-        } catch (PDOException $exception) {
-            printf("Connection error: %s", $exception->getMessage());
-	
-        }
-    }
+    if (isset($_POST) && count ($_POST) > 0) {
+//$user_id = htmlspecialchars(trim($_POST["user_id"]));
+$task_type = htmlspecialchars(ucfirst(trim($_POST["task_type"])));
+$title = htmlspecialchars(ucfirst(trim($_POST["title"]))); $description = htmlspecialchars(ucfirst(trim($_POST["description"])));
+$req_words = htmlspecialchars(ucfirst(trim($_POST["req_words"])));
+$word_count = htmlspecialchars(ucfirst(trim($_POST["word_count"])));
+$total_pages = htmlspecialchars(ucfirst(trim($_POST["total_pages"])));
+$file_format = htmlspecialchars(ucfirst(trim($_POST["file_format"])));
+$due_date = htmlspecialchars(ucfirst(trim($_POST["due_date"])));
+$due_time = htmlspecialchars(ucfirst(trim($_POST["due_time"])));
+$tags = htmlspecialchars(ucfirst(trim($_POST["tags"])));
+//$passOne = $_POST["pass_one"]; $passTwo = $_POST["pass_two"];
+//check wheter user/email alerady exists
+/*$dbh = new PDO("mysql:host=localhost;dbname=group13", "root");
+$stmt = $dbh->prepare("SELECT user_id, email, password1 FROM userinfo WHERE email = ?" );
+$stmt->execute(array($email));
+$rowCount = $stmt->rowCount();
+if ($passOne != $passTwo) { //in case Javascript is disabled.
+printf("<h2> Passwords do not match. </h2>");
+} else {
+if ($rowCount > 0) {
+printf("<h2> An account already exists with the given email.</h2>");
+} else {*/
+$query = "INSERT INTO tasks SET task_id = :task_id, user_id = :user_id, date = :date, expiry_date = :expiry_date, task_type = :task_type, title = :title, req_words = :req_words, word_count = :word_count, total_pages = :total_pages, file_format = :file_format, due_date = :due_date, due_time = :due_time, description = :description, tag = :tag";
+$stmt = $dbh->prepare($query);
+$siteSalt = "group13";
+//$affectedRows = $stmt->execute(array(':user_id' => $user_id, ':user_type' => $user_type, ':email' => $email, ':first_name' => $firstName, ':last_name' => $lastName, ':password' => $saltedHash, ':level' => $level, ':discipline' => $discipline, ':current' => $current));
+//if ($affectedRows > 0) {
+//$insertId = $dbh->lastInsertId();
+printf("<h2> Task successfully created %s! Please <a href=\"./login.php\"> login </a> to proceed. </h2>", $firstName);
+//logout first
+/*http://php.net/manual/en/function.session-unset.php*/
+session_unset(); session_destroy(); session_write_close(); setcookie(session_name(),'',0,'/');
+session_regenerate_id(true);
+} } } }
 
 ?>
 <?php 
@@ -138,10 +128,10 @@ if (!isset($_POST) || count($_POST) == 0) { ?>
 												<label> Tags:</label>
 												<form> <p>Pick 4 tags maximum </p> 
 												<script type="text/javascript">
-												</script> 
+												</script>
 												</head> 
 												<body> 
-												<div id="ScrollCB" style="height:150;width:400px;overflow:auto"> 
+												<div id="ScrollCB" style="height:150;width:400px;overflow:auto" name = tags> 
 												<input type="checkbox" id="Accounting" value="Accounting"><label for="Accounting"> Accounting</label><br>
 												<input type="checkbox" id="Database Design" value="Database Design"><label for="Database Design"> Database Design</label><br>
 												<input type="checkbox" id="Design" value="Design"><label for="Design"> Design</label><br>
@@ -163,12 +153,6 @@ if (!isset($_POST) || count($_POST) == 0) { ?>
 												<input type="checkbox" id="Technology" value="Technology"><label for="Technology"> Technology</label><br>
 												<input type="checkbox" id="Web Design" value="Web Design"><label for="Web Design"> Web Design</label><br>
 												</div>
-												<script type="text/javascript">
-
-												//Syntax: checkboxlimit(checkbox_reference, limit)
-												checkboxlimit(create_task, 4)
-
-</script>
 											
 												
 												<button type="submit" class="button special small">Submit</button>

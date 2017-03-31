@@ -105,7 +105,7 @@ if (isset($_POST) && count ($_POST) > 0) {
 if (!isset($_POST) || count($_POST) == 0) { ?>
 											<form method="post">
 												<label> User_ID:</label>
-												<input type="integer" User_ID="user_id" placeholder="user_id" required="required" maxlength="30"/>
+												<input type="integer" name="user_id" placeholder="user_id" required="required" maxlength="30"/>
 												<label> User_Type:</label>
 												<select name = "user_type">
 												<option value = '-Pick From List-'>-Pick From List-</option>
