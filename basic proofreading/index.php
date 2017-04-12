@@ -19,9 +19,9 @@
 				<!-- Nav -->
 					<nav id="nav" class="alt">
 						<ul>
-							<li><a href="./register.php" class="active">Register</a></li>
+							<li><a href="./index.php" class="active">Home</a></li>
 							
-							<li><a href="./login.php" class="">Login</a></li>						
+							<li><a href="./logout.php" class="">Logout</a></li>						
 						</ul>
 					</nav>
 

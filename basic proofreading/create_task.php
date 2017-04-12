@@ -52,8 +52,8 @@
 										</header>
 <?php 
     if (isset($_POST) && count ($_POST) > 0) {
-$Student_ID = "12345678"; 
-//$_SESSION["user_id"];
+//$Student_ID = $_SESSION["user_id"];
+$Student_ID = htmlspecialchars(ucfirst(trim($_POST["Student_ID"])));
 $Task_Type = htmlspecialchars(ucfirst(trim($_POST["Task_Type"])));
 $Title = htmlspecialchars(ucfirst(trim($_POST["Title"]))); 
 $Description = htmlspecialchars(ucfirst(trim($_POST["Description"])));
@@ -69,7 +69,7 @@ $Due_Time = htmlspecialchars(ucfirst(trim($_POST["Due_Time"])));
 $Tag = htmlspecialchars(ucfirst(trim($_POST["Tag"])));
 //$passOne = $_POST["pass_one"]; $passTwo = $_POST["pass_two"];
 //check wheter user/email alerady exists
-$dbh = new PDO("mysql:host=localhost;dbname=group13", "root", "");
+$dbh = new PDO("mysql:host=localhost;dbname=Proofreading", "root", "");
 /*$stmt = $dbh->prepare("SELECT task_id FROM tasks WHERE task_id = ?" );
 $stmt->execute(array($task_id));
 $rowCount = $stmt->rowCount();
@@ -81,11 +81,11 @@ if ($passOne != $passTwo) { //in case Javascript is disabled.
 			} else {*/
 			
 			//$student_id = 15181596
-				$query = "INSERT INTO `tasks` (`Task_ID`,`Task_Type`, `Title`, `Req_Words`, `Word_Count`, `Total_Pages`, `File_Format`, `Due_Date`, `Due_Time`, `Description`, `Tag`, `Student_ID`) VALUES (null, :Task_Type , :Title, :Req_Words, :Word_Count, :Total_Pages, :File_Format, :Due_Date, :Due_Time, :Description, :Tag, null)";
+				$query = "INSERT INTO `tasks` (`Task_ID`,`Task_Type`, `Title`, `Req_Words`, `Word_Count`, `Total_Pages`, `File_Format`, `Due_Date`, `Due_Time`, `Description`, `Tag`, `Student_ID`) VALUES (null, :Task_Type , :Title, :Req_Words, :Word_Count, :Total_Pages, :File_Format, :Due_Date, :Due_Time, :Description, :Tag, :Student_ID)";
 				//$query = "INSERT INTO Tasks SET Student_ID = :Student_ID, Task_Type = :Task_Type, Title = :Title, Req_Words = :Req_Words, Word_Count = :Word_Count, Total_Pages = :Total_Pages, File_Format = :File_Format, Due_Date = :Due_Date, Due_Time = :Due_Time, Description = :Description, Tags = :Tags";
 				//$stmt->bindValue(':Task_Type', $Task_Type);
 				$stmt = $dbh->prepare($query);
-				//$siteSalt = "group13";
+				//$siteSalt = "Proofreading";
 				$temp = array(':Task_Type' => $Task_Type, ':Title' => $Title, ':Req_Words' => $Req_Words, ':Word_Count' => $Word_Count, ':Total_Pages' => $Total_Pages, ':File_Format' => $File_Format, ':Due_Date' => $Due_Date, ':Due_Time' => $Due_Time, ':Description' => $Description, ':Tag' => $Tag);
 				
 				print_r($temp); 

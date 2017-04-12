@@ -19,11 +19,11 @@
 				<!-- Nav -->
 					<nav id="nav" class="alt">
                         <ul>
-							<li><a href="./index.php" class="active">Home</a></li>
+							<li><a href="./landing.php" class="active">Home</a></li>
 							<?php 
 							if (!isset ($_SESSION)) {
 								session_start();
-								
+								$user_id = session_id();
 							}
 				
 							if (isset($_SESSION["user_id"]) && $_SESSION["user_id"] != ''){ 
@@ -53,26 +53,26 @@
 										
     if (isset($_POST["e"]) && isset($_POST["p"]) && trim($_POST["e"]) !='' && trim($_POST["p"]) != ''  ){
         try {
-            $dbh = new PDO("mysql:host=localhost;dbname=group13", "root", "");
+            $dbh = new PDO("mysql:host=localhost;dbname=Proofreading", "root", "");
 			
             $email = trim(strtolower($_POST["e"]));
             $password = $_POST["p"];	
 			$passwordHash = "";
 			
-            $stmt = $dbh->prepare("SELECT id, email, password FROM Users WHERE email = ?" );
+            $stmt = $dbh->prepare("SELECT student_id, email, password1 FROM Users WHERE email = ?" );
 			$stmt->execute(array($email));
 			$id = null;
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {        
-                $id = $row['id'];
-                $passwordHash = $row['password'];
+                $id = $row['student_id'];
+                $passwordHash = $row['password1'];
         }
 		
-		$siteSalt  = "ulbuynsell";
+		$siteSalt  = "proofreading";
 		$saltedHash = hash('sha256', $password.$siteSalt);
 		
 		if ($passwordHash == $saltedHash && !is_null($id)) {
 			$_SESSION['user_id'] = $id; 
-			header("Location:./index.php");
+			header("Location:http://localhost/landing.php");
 		} else {
 			printf("<h2> Password incorrect or account not found. </h2>");
 		}
@@ -86,7 +86,7 @@
 ?>
 
 										<h2>Login</h2>
-										<form method="post">
+										<form action="/landing.php" method="post">
 												<input type="text" name="email" placeholder="email" required="required" maxlength="35"/>
 												<br>
 												<input type="password" name="password1" placeholder="Password" required="required" maxlength="50"/>

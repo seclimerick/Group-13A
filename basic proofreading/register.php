@@ -52,8 +52,8 @@
 										<h2>Sign up</h2>
 <?php
 if (isset($_POST) && count ($_POST) > 0) {
-	$firstName = htmlspecialchars(ucfirst(trim($_POST["first_name"])));
-	$lastName = htmlspecialchars(ucfirst(trim($_POST["last_name"])));
+	$forename = htmlspecialchars(ucfirst(trim($_POST["forename"])));
+	$surname = htmlspecialchars(ucfirst(trim($_POST["surname"])));
 	$email = trim(strtolower($_POST["email"]));
 	$passOne = $_POST["pass_one"];
 	$passTwo = $_POST["pass_two"];
@@ -61,7 +61,7 @@ if (isset($_POST) && count ($_POST) > 0) {
 	
 	
 	//check wheter user/email alerady exists
-	$dbh = new PDO("mysql:host=localhost;dbname=group13", "root", "");
+	$dbh = new PDO("mysql:host=localhost;dbname=proofreading", "root", "");
 	$stmt = $dbh->prepare("SELECT id, email, password FROM Users WHERE email = ?" );
 	$stmt->execute(array($email));
 	$rowCount = $stmt->rowCount();
@@ -71,15 +71,15 @@ if (isset($_POST) && count ($_POST) > 0) {
 		if ($rowCount > 0) { 
 			printf("<h2> An account already exists with the given email.</h2>");
 		} else {
-			$query = "INSERT INTO users SET email = :email, first_name = :first_name, last_name = :last_name, password = :password";
+			$query = "INSERT INTO users SET email = :email, forename = :forename, surname = :surname, password = :password";
 			$stmt = $dbh->prepare($query);
-			$siteSalt  = "ulbuynsell";
+			$siteSalt  = "proofreading";
 			$saltedHash = hash('sha256', $passOne.$siteSalt);	
-			$affectedRows = $stmt->execute(array(':email' => $email, ':first_name' => $firstName, ':last_name' => $lastName, ':password' => $saltedHash));
+			$affectedRows = $stmt->execute(array(':email' => $email, ':forename' => $forename, ':surname' => $surname, ':password' => $saltedHash));
 			
 			if ($affectedRows > 0) {
 					$insertId = $dbh->lastInsertId();
-					printf("<h2> Welcome %s! Please <a href=\"./login.php\"> login </a> to proceed. </h2>", $firstName);
+					printf("<h2> Welcome %s! Please <a href=\"./login.php\"> login </a> to proceed. </h2>", $forename);
 													 //logout first
 								/*http://php.net/manual/en/function.session-unset.php*/
 								session_unset();
@@ -104,8 +104,8 @@ if (isset($_POST) && count ($_POST) > 0) {
 
 if (!isset($_POST) || count($_POST) == 0) { ?>
 											<form method="post">
-												<label> User_ID:</label>
-												<input type="integer" name="user_id" placeholder="user_id" required="required" maxlength="30"/>
+												<label> Student_ID:</label>
+												<input type="integer" name="student_id" placeholder="student_id" required="required" maxlength="30"/>
 												<label> User_Type:</label>
 												<select name = "user_type">
 												<option value = '-Pick From List-'>-Pick From List-</option>
@@ -113,16 +113,16 @@ if (!isset($_POST) || count($_POST) == 0) { ?>
 												<option value = 'Moderator'>Moderator</option>
 												</select>
 												<br>
-												<label> First name*:</label>
-												<input type="text" name="first_name" placeholder="first name" required="required" maxlength="30"/>
-												<label> Last name:</label>
-												<input type="text" name="last_name" placeholder="last name" maxlength="25"/>
+												<label> Forename*:</label>
+												<input type="text" name="forename" placeholder="forename" required="required" maxlength="30"/>
+												<label> Surname:</label>
+												<input type="text" name="surname" placeholder="surname" maxlength="25"/>
 												<label> Discipline:</label>
 												<select name = "discipline">
 												<option value = '-Pick From List-'>-Pick From List-</option>
 												<option value = 'Law and Accounting'>Law and Accounting</option>
 												<option value = 'Midwifery'>Midwifery</option>
-												<option value = 'Product Design and Technology'>Product Des)ign and Technology</option>
+												<option value = 'Product Design and Technology'>Product Design and Technology</option>
 												<option value = 'Computing Technologies'>Computing Technologies</option>
 												<option value = 'Nursing (Mental Health)'>Nursing (Mental Health)</option>
 												<option value = 'Nursing (Intellectual Disability)'>Nursing (Intellectual Disability)</option>
@@ -160,17 +160,19 @@ if (!isset($_POST) || count($_POST) == 0) { ?>
 
 <?php
 if (isset($_POST) && count ($_POST) > 0) {
-$user_id = htmlspecialchars(trim($_POST["user_id"]));
+$student_id = htmlspecialchars(trim($_POST["student_id"]));
 $user_type = htmlspecialchars(ucfirst(trim($_POST["user_type"])));
-$firstName = htmlspecialchars(ucfirst(trim($_POST["first_name"]))); $lastName = htmlspecialchars(ucfirst(trim($_POST["last_name"])));
+$forename = htmlspecialchars(ucfirst(trim($_POST["forename"]))); 
+$surname = htmlspecialchars(ucfirst(trim($_POST["surname"])));
 $discipline = htmlspecialchars(ucfirst(trim($_POST["discipline"])));
 $level = htmlspecialchars(ucfirst(trim($_POST["level"])));
 $current = htmlspecialchars(ucfirst(trim($_POST["current"])));
 $email = trim(strtolower($_POST["email"]));
-$passOne = $_POST["pass_one"]; $passTwo = $_POST["pass_two"];
+$passOne = $_POST["pass_one"]; 
+$passTwo = $_POST["pass_two"];
 //check wheter user/email alerady exists
-$dbh = new PDO("mysql:host=localhost;dbname=group13", "root");
-$stmt = $dbh->prepare("SELECT user_id, email, password1 FROM userinfo WHERE email = ?" );
+$dbh = new PDO("mysql:host=localhost;dbname=proofreading", "root");
+$stmt = $dbh->prepare("SELECT student_id, email, password1 FROM userinfo WHERE email = ?" );
 $stmt->execute(array($email));
 $rowCount = $stmt->rowCount();
 if ($passOne != $passTwo) { //in case Javascript is disabled.
@@ -179,14 +181,14 @@ printf("<h2> Passwords do not match. </h2>");
 if ($rowCount > 0) {
 printf("<h2> An account already exists with the given email.</h2>");
 } else {
-$query = "INSERT INTO userinfo SET user_id = :user_id, user_type = :user_type, email = :email, forename = :first_name, surname = :last_name, password1 = :password, discipline = :discipline, level = :level, current = :current";
+$query = "INSERT INTO userinfo SET student_id = :student_id, user_type = :user_type, email = :email, forename = :forename, surname = :surname, password1 = :password, discipline = :discipline, level = :level, current = :current";
 $stmt = $dbh->prepare($query);
-$siteSalt = "group13";
+$siteSalt = "proofreading";
 $saltedHash = hash('sha256', $passOne.$siteSalt);
-$affectedRows = $stmt->execute(array(':user_id' => $user_id, ':user_type' => $user_type, ':email' => $email, ':first_name' => $firstName, ':last_name' => $lastName, ':password' => $saltedHash, ':level' => $level, ':discipline' => $discipline, ':current' => $current));
+$affectedRows = $stmt->execute(array(':student_id' => $student_id, ':user_type' => $user_type, ':email' => $email, ':forename' => $forename, ':surname' => $surname, ':password' => $saltedHash, ':level' => $level, ':discipline' => $discipline, ':current' => $current));
 if ($affectedRows > 0) {
 $insertId = $dbh->lastInsertId();
-printf("<h2> Welcome %s! Please <a href=\"./login.php\"> login </a> to proceed. </h2>", $firstName);
+printf("<h2> Welcome %s! Please <a href=\"./login.php\"> login </a> to proceed. </h2>", $forename);
 //logout first
 /*http://php.net/manual/en/function.session-unset.php*/
 session_unset(); session_destroy(); session_write_close(); setcookie(session_name(),'',0,'/');
