@@ -33,7 +33,7 @@
 								printf("<li><a href=\"./sell.php\" class=\"\">Sell</a></li>");
 							    printf("<li><a href=\"./logout.php\" class=\"\">Logout</a></li>");
 							} else {
-								printf("<li><a href=\"./login.php\" class=\"\">Login</a></li>");
+								printf("<li><a href=\"./login.php\" class=\"\">next</a></li>");
 							}
 							?>
 						
@@ -52,8 +52,9 @@
 										</header>
 <?php 
     if (isset($_POST) && count ($_POST) > 0) {
-//$Student_ID = $_SESSION["user_id"];
-$Student_ID = htmlspecialchars(ucfirst(trim($_POST["Student_ID"])));
+$Student_ID = $_SESSION['user_id'];
+printf("student id %s",$Student_ID);
+//$Student_ID = htmlspecialchars(ucfirst(trim($_POST["Student_ID"])));
 $Task_Type = htmlspecialchars(ucfirst(trim($_POST["Task_Type"])));
 $Title = htmlspecialchars(ucfirst(trim($_POST["Title"]))); 
 $Description = htmlspecialchars(ucfirst(trim($_POST["Description"])));
@@ -86,9 +87,9 @@ if ($passOne != $passTwo) { //in case Javascript is disabled.
 				//$stmt->bindValue(':Task_Type', $Task_Type);
 				$stmt = $dbh->prepare($query);
 				//$siteSalt = "Proofreading";
-				$temp = array(':Task_Type' => $Task_Type, ':Title' => $Title, ':Req_Words' => $Req_Words, ':Word_Count' => $Word_Count, ':Total_Pages' => $Total_Pages, ':File_Format' => $File_Format, ':Due_Date' => $Due_Date, ':Due_Time' => $Due_Time, ':Description' => $Description, ':Tag' => $Tag);
+				$temp = array(':Task_Type' => $Task_Type, ':Title' => $Title, ':Req_Words' => $Req_Words, ':Word_Count' => $Word_Count, ':Total_Pages' => $Total_Pages, ':File_Format' => $File_Format, ':Due_Date' => $Due_Date, ':Due_Time' => $Due_Time, ':Description' => $Description, ':Tag' => $Tag, ':Student_ID' => $Student_ID);
 				
-				print_r($temp); 
+
 				$affectedRows = $stmt->execute($temp);
 				$insertId = $dbh->lastInsertId();
 				printf("<h2> Task successfully created! </h2>".$affectedRows."--".$insertId); 
@@ -98,8 +99,8 @@ if ($passOne != $passTwo) { //in case Javascript is disabled.
 					printf("<h2> Task successfully created!");
 					//logout first
 					//http://php.net/manual/en/function.session-unset.php
-					session_unset(); session_destroy(); session_write_close(); setcookie(session_name(),'',0,'/');
-					session_regenerate_id(true);
+					//session_unset(); session_destroy(); session_write_close(); setcookie(session_name(),'',0,'/');
+					//session_regenerate_id(true);
 				}
 			
 		//}			

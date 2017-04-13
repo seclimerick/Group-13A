@@ -23,11 +23,11 @@
 							<?php 
 							if (!isset ($_SESSION)) {
 								session_start();
-								$user_id = session_id();
+								$_SESSION['user_id'] = session_id();
 							}
 				
 							if (isset($_SESSION["user_id"]) && $_SESSION["user_id"] != ''){ 
-								printf("<li><a href=\"./sell.php\" class=\"\">Sell</a></li>");
+								printf("<li><a href=\"./creat_task.php\" class=\"\">Create Task</a></li>");
 							    printf("<li><a href=\"./logout.php\" class=\"\">Logout</a></li>");
 							} else {
 								printf("<li><a href=\"./login.php\" class=\"\">Login</a></li>");
@@ -51,31 +51,31 @@
     
  
 										
-    if (isset($_POST["e"]) && isset($_POST["p"]) && trim($_POST["e"]) !='' && trim($_POST["p"]) != ''  ){
+    if (isset($_POST["email"]) && isset($_POST["password1"]) && trim($_POST["email"]) !='' && trim($_POST["password1"]) != ''  ) {
         try {
-            $dbh = new PDO("mysql:host=localhost;dbname=Proofreading", "root", "");
-			
-            $email = trim(strtolower($_POST["e"]));
-            $password = $_POST["p"];	
+            $dbh = new PDO("mysql:host=localhost;dbname=proofreading", "root", "");
+			//printf("inside login php");
+            $email = trim(strtolower($_POST["email"]));
+            $password = $_POST["password1"];	
 			$passwordHash = "";
 			
-            $stmt = $dbh->prepare("SELECT student_id, email, password1 FROM Users WHERE email = ?" );
-			$stmt->execute(array($email));
-			$id = null;
+            $stmt = $dbh->prepare("SELECT Student_ID, Email, Password1 FROM userinfo WHERE Email = :email");
+			$stmt->execute(array(':email' => $email));
+			$Student_ID = null;
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {        
-                $id = $row['student_id'];
-                $passwordHash = $row['password1'];
-        }
-		
+                $Student_ID = $row['Student_ID'];
+                $passwordHash = $row['Password1'];
+			}
+		printf("student id %s",$Student_ID);
 		$siteSalt  = "proofreading";
 		$saltedHash = hash('sha256', $password.$siteSalt);
 		
-		if ($passwordHash == $saltedHash && !is_null($id)) {
-			$_SESSION['user_id'] = $id; 
-			header("Location:http://localhost/landing.php");
-		} else {
-			printf("<h2> Password incorrect or account not found. </h2>");
-		}
+		//if ($passwordHash == $saltedHash && !is_null($Student_ID)) {
+			$_SESSION['user_id'] = $Student_ID;
+			header("Location:./index.php");
+		//} else {
+		//	printf("<h2> Password incorrect or account not found. </h2>");
+		//}
 
     } catch (PDOException $exception) {
         printf("Connection error: %s", $exception->getMessage());
@@ -86,7 +86,7 @@
 ?>
 
 										<h2>Login</h2>
-										<form action="/landing.php" method="post">
+										<form action="./login.php" method="post">
 												<input type="text" name="email" placeholder="email" required="required" maxlength="35"/>
 												<br>
 												<input type="password" name="password1" placeholder="Password" required="required" maxlength="50"/>

@@ -44,7 +44,16 @@
 
 						<!-- First Section -->
 							
-
+								<section id="create_task" class="main">
+								<div class="spotlight">
+									<div class="content">
+								<button type="submit" class="button special small"> <a href="./create_task.php" class="active">Create Task</a></button>										
+										
+									</div>
+									
+								</div>
+							</section>
+							
 						
 							
 
