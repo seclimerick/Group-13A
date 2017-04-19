@@ -30,7 +30,6 @@
 							}
 							
 							if (isset($_SESSION["user_id"]) && $_SESSION["user_id"] != ''){ 
-								printf("<li><a href=\"./sell.php\" class=\"\">Sell</a></li>");
 							    printf("<li><a href=\"./logout.php\" class=\"\">Logout</a></li>");
 							} else {
 								printf("<li><a href=\"./login.php\" class=\"\">next</a></li>");
@@ -53,7 +52,7 @@
 <?php 
     if (isset($_POST) && count ($_POST) > 0) {
 $Student_ID = $_SESSION['user_id'];
-printf("student id %s",$Student_ID);
+//printf("student id %s",$Student_ID);
 //$Student_ID = htmlspecialchars(ucfirst(trim($_POST["Student_ID"])));
 $Task_Type = htmlspecialchars(ucfirst(trim($_POST["Task_Type"])));
 $Title = htmlspecialchars(ucfirst(trim($_POST["Title"]))); 
@@ -92,9 +91,8 @@ if ($passOne != $passTwo) { //in case Javascript is disabled.
 
 				$affectedRows = $stmt->execute($temp);
 				$insertId = $dbh->lastInsertId();
-				printf("<h2> Task successfully created! </h2>".$affectedRows."--".$insertId); 
 				if ($affectedRows > 0) {
-					printf("Inserted rows is equal to %s", $affectedRows);
+					//printf("Inserted rows is equal to %s", $affectedRows);
 					$insertId = $dbh->lastInsertId();
 					printf("<h2> Task successfully created!");
 					//logout first
@@ -184,20 +182,8 @@ if (!isset($_POST) || count($_POST) == 0) {
 										?>
 										
 									
-												<ul class="actions small">
-										<?php 	
-												if (!isset ($_SESSION)) {
-												session_start();
-												}
-							
-												if (isset($_SESSION["user_id"]) && $_SESSION["user_id"] != ''){ 
 												
-													printf("<li><a href=\"#\" class=\"button special small\">Commit to buy</a></li>");
-												} 
-										?>
-													<li><a href="./index.php" class="button small">Back</a></li>
-												</ul>
-
+										
 
 
 										

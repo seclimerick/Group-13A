@@ -19,7 +19,7 @@
 				<!-- Nav -->
 					<nav id="nav" class="alt">
 					<ul>
-							<li><a href="./index.php" class="active">Home</a></li>
+							<li><a href="./landing.php" class="active">Home</a></li>
 							
 							<?php 
 							if (!isset ($_SESSION)) {
@@ -28,8 +28,7 @@
 							}
 							
 							if (isset($_SESSION["user_id"]) && $_SESSION["user_id"] != ''){ 
-								printf("<li><a href=\"#first\" class=\"\">Sell</a></li>");
-							    printf("<li><a href=\"./logout.php\" class=\"\">Logout</a></li>");
+							    printf("<li><a href=\"./register.php\" class=\"\">Register</a></li>");
 							} else {
 								printf("<li><a href=\"./login.php\" class=\"\">Login</a></li>");
 							}

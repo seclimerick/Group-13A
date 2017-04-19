@@ -1,5 +1,5 @@
 <html><head>
-		<title>UL-Proofreading Service - Home</title>
+		<title>UL-Proofreading Service - My Tasks</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
@@ -41,26 +41,27 @@
 									
 								</div>
 							</section>
-
-						<!-- First Section -->
-							<section id="my_task_list" class="main">
-								<div class="spotlight">
-									<div class="content">
-								<button type="submit" class="button special small"> <a href="./my_tasks.php" class="active">My Tasks</a></button>										
-										
-									</div>
-									
-								</div>
-							</section>
-								<section id="create_task" class="main">
-								<div class="spotlight">
-									<div class="content">
-								<button type="submit" class="button special small"> <a href="./create_task.php" class="active">Create Task</a></button>										
-										
-									</div>
-									
-								</div>
-							</section>
+			<?php
+				//if (isset($_GET["User_ID"])) {
+				$id = 16123234;
+				try{
+					$dbh = new PDO("mysql:host=localhost;dbname=Proofreading", "root", "");
+					while($row_data = mysql_fetch_array($row_data))
+					{
+						$Task_ID = $row_data['Task_ID'];
+						$Title = $row_data['Title'];
+						echo $Task_ID;
+						echo $Title;
+					}
+					}
+				catch (PDOException $exception) {
+					printf("Connection error: %s", $exception->getMessage());
+	
+				}
+				//}
+			?>
+										<!-- First Section -->
+							
 							
 						
 							

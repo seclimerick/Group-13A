@@ -27,8 +27,7 @@
 							}
 				
 							if (isset($_SESSION["user_id"]) && $_SESSION["user_id"] != ''){ 
-								printf("<li><a href=\"./creat_task.php\" class=\"\">Create Task</a></li>");
-							    printf("<li><a href=\"./logout.php\" class=\"\">Logout</a></li>");
+							    printf("<li><a href=\"./register.php\" class=\"\">Register</a></li>");
 							} else {
 								printf("<li><a href=\"./login.php\" class=\"\">Login</a></li>");
 							}
