@@ -16,6 +16,7 @@
 		font-size: 100%;
 		font: inherit;
 		vertical-align: baseline;
+		color: #636363;
 	}
 
 	article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
@@ -44,6 +45,7 @@
 	table {
 		border-collapse: collapse;
 		border-spacing: 0;
+		color: #636363;
 	}
 
 	body {

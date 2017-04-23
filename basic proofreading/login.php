@@ -54,26 +54,24 @@
         try {
             $dbh = new PDO("mysql:host=localhost;dbname=proofreading", "root", "");
 			//printf("inside login php");
-            $email = trim(strtolower($_POST["email"]));
+            $email = trim(($_POST["email"]));
             $password = $_POST["password1"];	
 			$passwordHash = "";
-			
             $stmt = $dbh->prepare("SELECT Student_ID, Email, Password1 FROM userinfo WHERE Email = :email");
 			$stmt->execute(array(':email' => $email));
 			$Student_ID = null;
-            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {        
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {      
                 $Student_ID = $row['Student_ID'];
-                $passwordHash = $row['Password1'];
+				$passwordHash = $row['Password1'];
 			}
 		printf("student id %s",$Student_ID);
 		$siteSalt  = "proofreading";
 		$saltedHash = hash('sha256', $password.$siteSalt);
-		
 		//if ($passwordHash == $saltedHash && !is_null($Student_ID)) {
 			$_SESSION['user_id'] = $Student_ID;
 			header("Location:./index.php");
 		//} else {
-		//	printf("<h2> Password incorrect or account not found. </h2>");
+			//printf("<h2> Password incorrect or account not found. </h2>");
 		//}
 
     } catch (PDOException $exception) {

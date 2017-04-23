@@ -1,5 +1,6 @@
+
 <html><head>
-		<title>UL-Proofreading Service - Home</title>
+		<title>UL-Proofreading Service - My Tasks</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
@@ -14,26 +15,25 @@
 
 				<!-- Header -->
 				<header id="header" class="alt">
-					<nav id="nav" class="alt">
-                        <ul>
-							<li><a href="./landing.php" class="active">Home</a></li>
+				<nav id="nav" class="alt">
+					<ul>
+							<li><a href="./index.php" class="active">Home</a></li>
+							
 							<?php 
 							if (!isset ($_SESSION)) {
 								session_start();
 							}
+							
 							if (isset($_SESSION["user_id"]) && $_SESSION["user_id"] != ''){ 
-							    printf("<li><a href=\"./Logout.php\" class=\"\">Logout</a></li>");
+							    printf("<li><a href=\"./logout.php\" class=\"\">Logout</a></li>");
 							} else {
-								printf("<li><a href=\"./login.php\" class=\"\">Login</a></li>");
+								printf("<li><a href=\"./login.php\" class=\"\">next</a></li>");
 							}
 							?>
 						
-						</ul>		
+						</ul>
 					</nav>
-				
 				</header>
-
-				
 
 				<!-- Main -->
 					<div id="main">
@@ -44,36 +44,6 @@
 									<div class="content">
 										<header class="major">
 											<h2>UL-Proofreading Service</h2>
-											</div>
-							</section>
-								<section id="all_tasks_list" class="main">
-								<div class="spotlight">
-									<div class="content">
-								<button type="submit" class="button special small"> <a href="./task_list.php" class="active">View all tasks</a></button>										
-										
-									</div>
-									
-								</div>
-							</section>
-							
-							<section id="my_task_list" class="main">
-								<div class="spotlight">
-									<div class="content">
-								<button type="submit" class="button special small"> <a href="./my_tasks.php" class="active">My Tasks</a></button>										
-										
-									</div>
-									
-								</div>
-							</section>
-								<section id="create_task" class="main">
-								<div class="spotlight">
-									<div class="content">
-								<button type="submit" class="button special small"> <a href="./create_task.php" class="active">Create Task</a></button>										
-										
-									</div>
-									
-								</div>
-							</section>
 										</header>
 									
 										
@@ -81,11 +51,49 @@
 									
 								</div>
 							</section>
-
-						<!-- First Section -->
+						<table border="2">
+						  <thead>
+							<tr>
+							  <th>TaskID</th>
+							  <th>Title</th>
+							  <th>Student ID</th>
+							  <th>Date Submitted</th>
+							  <th>Due Date</th>
+							  <th>Task type</th>
+							</tr>
+						  </thead>
+			
+			  
+			<?php
+				$dbh = new PDO("mysql:host=localhost;dbname=proofreading", "root", "");
+				$stmt = $dbh->query("SELECT Task_ID, Student_ID, Date, Due_Date, Task_Type, Title, Description FROM tasks");
+				while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+					$Task_ID = $row['Task_ID'];
+					$Student_ID = $row['Student_ID'];
+					$Date = $row['Date'];
+					$Due_Date = $row['Due_Date'];
+					$Title = $row['Title'];
+					$Task_Type = $row['Task_Type'];
+					if ($row){
+						printf("
+				<tr>
+					<td> %s </td>
+					<td> %s </td>
+					<td> %s </td>
+					<td> %s </td>
+					<td> %s </td>
+					<td> %s </td>
+					<td><a href='details.php?Task_ID=$Task_ID' title='Details'>Details</a></td>
+				</tr>", $Task_ID, $Title, $Student_ID, $Date, $Due_Date, $Task_Type, $Task_ID);
+				}
+				}
+			?>
+				</table>
+			
+										<!-- First Section -->
+							
+							
 						
-							
-							
 							
 
 						<!-- Get Started -->
